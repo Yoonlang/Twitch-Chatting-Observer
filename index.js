@@ -1,8 +1,28 @@
-const chattingList = document.querySelector(
+const baseChattingList = document.querySelector(
   ".chat-scrollable-area__message-container"
 );
 
-const handledChattingList = [];
+const 채팅내역 = (() => {
+  let chattingList = [];
+
+  const 초기화 = () => {
+    chattingList = [];
+  };
+
+  const 보기 = () => {
+    return chattingList;
+  };
+
+  const push = (data) => {
+    chattingList.push(data);
+  };
+
+  return {
+    초기화,
+    보기,
+    push,
+  };
+})();
 
 const observer = new MutationObserver((e) => {
   e.forEach((mutationRecord) => {
@@ -28,8 +48,8 @@ const observer = new MutationObserver((e) => {
       userId: userId ?? userName,
       chatting,
     };
-    handledChattingList.push(chattingData);
+    채팅내역.push(chattingData);
   });
 });
 
-observer.observe(chattingList, { childList: true });
+observer.observe(baseChattingList, { childList: true });
